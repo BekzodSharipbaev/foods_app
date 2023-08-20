@@ -1,0 +1,31 @@
+{% extends 'restaurant_app/base.html' %}
+{% load static %}
+{% block content %}
+  <div class="back-link-div">
+    <a class="back-link" href="{{ request.META.HTTP_REFERER }}">Назад</a>
+  </div>
+  <div class="container">
+    <form action="{% url 'add_dish' %}"
+          method="post"
+          enctype="multipart/form-data">
+      <div class="form-error">
+        {{ form.non_field_errors }}
+      </div>
+      {% csrf_token %}
+      {% for f in form %}
+        <p>
+          <label class="form-label" for="{{ f.id_for_label }}">
+            {{ f.label }}:
+          </label>
+          {{ f }}
+        </p>
+        <div class="form-error">
+          {{ f.errors }}
+        </div>
+      {% endfor %}
+      <button type="submit">
+        Добавить
+      </button>
+    </form>
+  </div>
+{% endblock content %}
